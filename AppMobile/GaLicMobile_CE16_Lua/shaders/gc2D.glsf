@@ -1,0 +1,52 @@
+// For 2D Sprite. Linked gc2d.glsv
+//
+// Copyleft (c) 2009 GaLic Studio All rights not reserved.
+//
+// Email: afewhee@hotmail.com
+// Date: 2009/ 3/ 3/
+
+// Texgra 2500은 Alpha Channerl을 통한 Gradation을 적용하기 어렵다.
+// 해결책: 알파 값이 0.005보다 작으면 discard 명령어를 이용하여 그리지 않는다.
+
+
+uniform vec4		s_col;	// color
+uniform sampler2D	s_tex;	// sampler
+uniform int			s_mon;	// use monotone
+
+varying		vec4	frg_dif;
+varying		vec2	frg_tex;
+
+void main()
+{
+	vec4	r;
+	vec4	texC =texture2D(s_tex, frg_tex);
+	float	t;
+
+	r	= texC;
+	r	*= s_col;
+	r	*= frg_dif;
+
+	if(r.a<0.005)
+	{
+		discard;
+		return;
+	}
+
+
+	if(1 == s_mon)
+	{
+		t = r.r * 0.299 + r.g * 0.587 + r.b * 0.114;
+		r.r = t;
+		r.g = t;
+		r.b = t;
+	}
+
+	else if(2 == s_mon)
+	{
+		r	= s_col;
+		r	*= frg_dif;
+	}
+
+	gl_FragColor = r;
+}
+

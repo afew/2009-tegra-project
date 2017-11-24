@@ -1,0 +1,65 @@
+// For Field Map Field.glsv
+//
+// Copyleft (c) 2009 GaLic Studio All rights not reserved.
+//
+// Email: afewhee@hotmail.com
+// Date: 2009-08-04
+//
+// att_pos: vertex position.
+// att_dif: vertex diffuse color.
+// att_tex0: texture coordinate 0-stage.
+// att_tex1: texture coordinate 1-stage.
+
+
+
+// constant values for transform
+uniform		mat4	mt_Wld;			// World
+uniform		mat4	mt_Viw;			// View
+uniform		mat4	mt_Prj;			// Projection Matrix
+
+
+// input vertex data
+attribute	vec3	att_pos;
+attribute	vec4	att_dif;
+attribute	vec2	att_tx0;
+attribute	vec3	att_tx1;
+
+
+// return to fragment shader values
+varying		vec4	frg_dif;		// Diffuse
+varying		vec2	frg_tx0;		// Texture Coordinate0
+varying		vec3	frg_tx1;		// Texture Coordinate1
+
+
+
+void main()
+{
+	////////////////////////////////////////////////////
+	// Setup Vertex Transformation
+	vec4	Pos;
+	Pos = mt_Wld * vec4(att_pos, 1.0);
+	Pos = mt_Viw * Pos;
+	Pos = mt_Prj * Pos;
+
+	gl_Position = Pos;
+
+	////////////////////////////////////////////////////
+	// Output Color
+	frg_dif	= att_dif;
+
+
+	////////////////////////////////////////////////////
+	// Setup Texture Coordinate
+	vec2	t0 = att_tx0;
+	vec3	t1 = att_tx1;
+
+	t0.y = 1.- t0.y;
+	t1.y = 1.- t1.y;
+
+	frg_tx0 = t0;
+	frg_tx1 = t1;
+}
+
+
+
+

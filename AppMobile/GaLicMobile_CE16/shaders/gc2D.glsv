@@ -1,0 +1,29 @@
+// For 2D Sprite. Linked gc2d.glsf
+//
+// Copyleft (c) 2009 GaLic Studio All rights not reserved.
+//
+// Email: afewhee@hotmail.com
+// Date: 2009/ 3/ 3/
+//
+// att_pos: vertex position.
+// att_dif: vertex color.
+// att_tex: texture coordinate.
+
+attribute	vec2	att_pos;
+attribute	vec4	att_dif;
+attribute	vec2	att_tex;
+
+varying		vec4	frg_dif;
+varying		vec2	frg_tex;
+
+void main()
+{
+	gl_Position.x = att_pos.x;
+	gl_Position.y = att_pos.y;
+	gl_Position.z = 0.0;
+
+	frg_dif  = att_dif;
+	frg_tex  = att_tex;
+}
+
+

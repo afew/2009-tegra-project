@@ -1,0 +1,59 @@
+// For Field Map Field.glsf
+//
+// Copyleft (c) 2009 GaLic Studio All rights not reserved.
+//
+// Email: afewhee@hotmail.com
+// Date: 2009-08-04
+
+// precision for float
+// lowp: 8bit
+//	mediump: 10bit
+// highp: 16bit
+
+
+
+//precision mediump float;
+
+
+// constant values for Sampler
+uniform sampler2D	smp_tex;	// 0-stage sampler
+
+
+//receive from vertex shader
+varying		vec4	frg_dif;		// Diffuse
+varying		vec2	frg_tx0;		// Texture Coordinate - 0-stage
+varying		vec3	frg_tx1;		// Texture Coordinate - 1-stage
+
+void main()
+{
+	vec4	Out	=	vec4(1.0,1.0,1.0,1.0);
+	vec4	t0	=	vec4(1.0,1.0,1.0,1.0);
+	vec4	t1	=	vec4(1.0,1.0,1.0,1.0);
+
+	vec2	tx2= vec2(frg_tx1.x, frg_tx1.y);
+
+	t0	= texture2D(smp_tex, frg_tx0);
+
+	// tiling
+	if(0.0 >= frg_tx1.z)
+	{
+		if(0.0 == frg_tx1.z && t0.a<1.0)
+			Out = texture2D(smp_tex, tx2);
+		else
+			Out	= t0;
+	}
+	else		// splatting
+	{
+		Out = texture2D(smp_tex, tx2);
+	}
+
+	Out *=frg_dif;
+
+	if(Out.a<0.001)
+	{
+		discard;
+		return;
+	}
+
+	gl_FragColor = Out;
+}

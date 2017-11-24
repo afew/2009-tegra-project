@@ -1,0 +1,55 @@
+////////////////////////////////////////////////////
+//
+
+Version	0.0.1
+
+TbMst
+{
+	NumC	3
+
+	TbSub
+	{
+		Index	0
+		NumS	10
+		Path	Model/2D/
+
+		Rec*	0	12	Mdl2D00.lcb
+		Rec*	1	12	Mdl2D01.lcb
+		Rec*	2	12	Mdl2D02.lcb
+		Rec*	3	12	Mdl2D03.lcb
+		Rec*	4	12	Mdl2D04.lcb
+		Rec*	5	12	Mdl2D05.lcb
+		Rec*	6	12	Mdl2D06.lcb
+		Rec*	7	12	Mdl2D07.lcb
+		Rec*	8	12	Mdl2D08.lcb
+		Rec*	9	12	Mdl2D09.lcb
+	}
+
+	TbSub
+	{
+		Index	1
+		NumS	7
+		Path	Model/3D/
+
+		Rec*	0	13	Tree01.lcs
+		Rec*	1	13	Tree02.lcs
+		Rec*	2	13	Tree03.lcs
+		Rec*	3	13	Tree04.lcs
+		Rec*	4	13	Rock01.lcs
+		Rec*	5	13	Rock02.lcs
+		Rec*	6	13	Rock03.lcs
+	}
+	
+	
+	TbSub
+	{
+		Index	2
+		NumS	4
+		Path	Model/Etc/
+
+		Rec*	0	13	mong.asb
+		Rec*	1	13	skydome.xln
+		Rec*	2	13	test.asb
+		Rec*	3	13	seafloor.xln
+	}
+}

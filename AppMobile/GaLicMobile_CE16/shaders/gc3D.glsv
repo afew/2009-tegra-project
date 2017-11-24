@@ -1,0 +1,69 @@
+// For Direct3D Vertex Processing Fixed Pipe Line. Linked gc3D.glsv
+//
+// Copyleft (c) 2009 GaLic Studio All rights not reserved.
+//
+// Email: afewhee@hotmail.com
+// Date: 2009-07-29
+//
+// att_pos: vertex position.
+// att_dif: vertex diffuse color.
+// att_tex: texture coordinate.
+
+
+// Rendering State values
+uniform		int		rs_useDiffuse;	// Use Diffuse Color
+uniform		int		rs_useTexture;	// Use Texture
+
+// constant values for transform
+uniform		mat4	mt_Wld;			// World
+uniform		mat4	mt_Viw;			// View
+uniform		mat4	mt_Prj;			// Projection Matrix
+
+
+// input vertex data
+attribute	vec3	att_pos;
+attribute	vec4	att_dif;
+attribute	vec2	att_tex;
+
+
+// return to fragment shader values
+varying		vec4	frg_pos;		// Vertex Position
+varying		vec4	frg_dif;		// Diffuse
+varying		vec2	frg_tex;		// Texture Coordinate
+varying		float	frg_bTex;		// Use Texture?
+
+
+
+void main()
+{
+	////////////////////////////////////////////////////
+	// Setup Vertex Transformation
+	frg_pos = mt_Wld * vec4(att_pos, 1.0);
+	frg_pos = mt_Viw * frg_pos;
+	frg_pos = mt_Prj * frg_pos;
+
+	gl_Position = frg_pos;
+
+
+	////////////////////////////////////////////////////
+	// Output Color
+	frg_dif = vec4(1,1,1,1);
+
+	if( 0 != rs_useDiffuse)
+		frg_dif	= att_dif;
+
+
+	////////////////////////////////////////////////////
+	// Setup Texture Coordinate
+	frg_bTex = 0.0;
+
+	if( 0 != rs_useTexture)
+	{
+		frg_tex = att_tex;
+		frg_bTex = 1.0;
+	}
+}
+
+
+
+
